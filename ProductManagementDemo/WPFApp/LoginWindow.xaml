@@ -5,164 +5,248 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFApp"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800"
+        Title="Login" Height="600" Width="450"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#2A2A2A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#444444"/>
+            <Setter Property="Padding" Value="15,12"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#4CAF50"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
+            <Setter Property="Background" Value="#2A2A2A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#444444"/>
+            <Setter Property="Padding" Value="15,12"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#4CAF50"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="25"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#66BB6A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#388E3C"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4444"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <Border CornerRadius="10"                    
-        BorderThickness="2"
-        Opacity="0.95">
-            <Border.BorderBrush>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#0099FF" Offset="0"/>
-                    <GradientStop Color="#DA34AE" Offset="0.75"/>
-                    <GradientStop Color="#FF60B1E7" Offset="1"/>
-                    <GradientStop Color="#FF596FDD" Offset="0.309"/>
-                    <GradientStop Color="#FF8C57CA" Offset="0.484"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="#060531" Offset="0"/>
-                    <GradientStop Color="#FF472FDE" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
+        <!-- Background with blur effect -->
+        <Border Background="#80000000" CornerRadius="15">
+            <Border.Effect>
+                <BlurEffect Radius="10"/>
+            </Border.Effect>
+        </Border>
+
+        <!-- Main content -->
+        <Border CornerRadius="15" 
+                Background="Aqua"
+                BorderThickness="1"
+                BorderBrush="#333333"
+                Margin="20">
 
             <Grid>
-                <StackPanel Orientation="Horizontal"
-   HorizontalAlignment="Center"
-    Height="82" VerticalAlignment="Top" Width="632">
-                    <TextBlock Text="LOGIN WINDOW"
-  Foreground="White"
-  FontSize="28"
-  FontWeight="Medium"
-  FontFamily="Montserrat"
-  Cursor="Hand"
-  Margin="180,30,0,0" Width="377"
- />
-                </StackPanel>
-                <StackPanel
-                        Orientation="Vertical"
-                        Margin="82,102,82,68">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Grid Grid.Row="0" Margin="20,20,20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Welcome Back"
+                                   Foreground="White"
+                                   FontSize="28"
+                                   FontWeight="Bold"
+                                   FontFamily="Segoe UI"/>
+                        <TextBlock Text="Sign in to your account"
+                                   Foreground="Azure"
+                                   FontSize="14"
+                                   Margin="0,5,0,0" FontWeight="Bold"/>
+                    </StackPanel>
+
+                                         <Button x:Name="btnClose" 
+                             Grid.Column="1"
+                             Content="✕"
+                             Style="{StaticResource CloseButtonStyle}"
+                             Click="btnClose_Click"/>
+                </Grid>
+
+                <!-- Login Form -->
+                <StackPanel Grid.Row="1" 
+                            Margin="30,40,30,20"
+                            VerticalAlignment="Center">
+
+                    <!-- Username -->
                     <TextBlock Text="Username"
-                           Foreground="DarkGray"
-                           FontSize="12"
-                           FontWeight="Medium"
-                           FontFamily="Montserrat"                             
-                           Margin="0,35,0,0"/>
+                               Foreground="Azure"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               Margin="0,0,0,8"/>
                     <TextBox x:Name="txtUser"
-                         FontSize="13"
-                         FontWeight="Medium"
-                         FontFamily="Montserrat"                            
-                         Foreground="White"
-                         CaretBrush="LightGray"
-                         BorderBrush="DarkGray"
-                         BorderThickness="0,0,0,2"
-                         Height="28"
-                         VerticalContentAlignment="Center"
-                         Margin="0,5,0,0" 
-                         >
-                        <TextBox.Background>
-                            <LinearGradientBrush></LinearGradientBrush>
-                        </TextBox.Background>
-                    </TextBox>
+                             Background="OrangeRed"
+                             Foreground="White"
+                             FontSize="14"
+                             FontFamily="Segoe UI"
+                             BorderThickness="1"
+                             BorderBrush="#444444"
+                             Padding="15,12"
+                             CaretBrush="White"
+                             Margin="0,0,0,20"
+                             Height="45"
+                             VerticalContentAlignment="Center"/>
 
+                    <!-- Password -->
                     <TextBlock Text="Password"
-                           Foreground="DarkGray"
-                           FontSize="12"
-                           FontWeight="Medium"
-                           FontFamily="Montserrat"                             
-                           Margin="0,15,0,0"/>
+                               Foreground="Azure"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               Margin="0,0,0,8"/>
                     <PasswordBox x:Name="txtPass"
-                         FontSize="13"
-                         FontWeight="Medium"
-                         FontFamily="Montserrat"                            
-                         Foreground="White"
-                         CaretBrush="LightGray"
-                         BorderBrush="DarkGray"
-                         BorderThickness="0,0,0,2"
-                         Height="28"
-                         VerticalContentAlignment="Center"
-                         Margin="0,5,0,0">
-                        <PasswordBox.Background>
-                            <LinearGradientBrush></LinearGradientBrush>
-                        </PasswordBox.Background>
-                    </PasswordBox>
-                    <Button x:Name="btnLogin"                          
-                        BorderThickness="0"
-                        Content="LOG IN"
-                        Foreground="White"
-                        FontSize="12"
-                        FontFamily="Montserrat"
-                        Cursor="Hand"                           
-                        Margin="0,50,0,0"
-                        Click="btnLogin_Click">
+                                 Background="BurlyWood"
+                                 Foreground="White"
+                                 FontSize="14"
+                                 FontFamily="Segoe UI"
+                                 BorderThickness="1"
+                                 BorderBrush="#444444"
+                                 Padding="15,12"
+                                 CaretBrush="White"
+                                 Margin="0,0,0,30"
+                                 Height="45"
+                                 VerticalContentAlignment="Center"/>
+
+                    <!-- Login Button -->
+                    <Button x:Name="btnLogin"
+                            Content="Sign In"
+                            Style="{StaticResource ModernButton}"
+                            Height="50"
+                            Margin="0,0,0,20"
+                            Click="btnLogin_Click"/>
+
+                    <!-- Divider -->
+                    <Grid Margin="0,20">
+                        <Line Stroke="#333333" StrokeThickness="1" X2="1" Stretch="Uniform"/>
+                        <TextBlock Text="or" 
+                                   Foreground="#666666" 
+                                   FontSize="12"
+                                   HorizontalAlignment="Center"
+                                   Background="#1A1A1A"
+                                   Padding="10,0"/>
+                    </Grid>
+
+                    <!-- Cancel Button -->
+                    <Button x:Name="btnCancel"
+                            Content="Cancel"
+                            Height="45"
+                            Click="btnCancel_Click">
                         <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#0099FF"/>
+                            <Style TargetType="Button" BasedOn="{StaticResource ModernButton}">
+                                <Setter Property="Background" Value="#666666"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#28AEED"/>
+                                        <Setter Property="Background" Value="#888888"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Background" Value="#555555"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="150" Height="40"
-                                    CornerRadius="20"
-                                    Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-
-
                     </Button>
-
-
-                </StackPanel>
-                <StackPanel>
-                    <Button x:Name="btnCancel"                          
-BorderThickness="0"
-Content="CANCEL"
-Foreground="White"
-FontSize="12"
-FontFamily="Montserrat"
-Cursor="Hand"                           
-Margin="20,350,20,0"
-Click="btnCancel_Click">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="LightSeaGreen"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="SeaGreen"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="150" Height="40"
-            CornerRadius="20"
-            Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                          HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-
-
-                    </Button>
-
                 </StackPanel>
 
+                <!-- Footer -->
+                <Border Grid.Row="2" 
+                        Background="Blue" 
+                        CornerRadius="0,0,15,15"
+                        Height="60">
+                    <TextBlock Text="Product Management System"
+                               Foreground="Azure"
+                               FontSize="12"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" FontWeight="Bold" FontStyle="Italic"/>
+                </Border>
             </Grid>
-
         </Border>
     </Grid>
 </Window>
